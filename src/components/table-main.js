@@ -1,20 +1,21 @@
-// /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { TableStyled, TdStyled, TfootStyled, Text } from "./table.styled";
-import { Button } from "./button";
-import * as actions from "../redux/actions";
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { TableStyled, TdStyled, TfootStyled, Text } from './table.styled';
+import { Button } from './button';
+import * as actions from '../redux/actions';
 
 const TableMain = ({
   M,
   N,
+  X,
   createNewMatrix,
   matrix,
+  copyMatrix,
   incrementItem,
-  hoverItem,
   deleteRow,
   averageValueColumn,
   averageValueColumnThank,
+  hoverItemThank,
 }) => {
   useEffect(() => {
     createNewMatrix(M, N);
@@ -34,13 +35,17 @@ const TableMain = ({
                 <TdStyled
                   key={j}
                   onClick={() => incrementItem(i, j)}
-                  onMouseEnter={(event) => hoverItem(col.amount, event)}
-                  onMouseLeave={(event) => hoverItem(col.amount, event)}
+                  onMouseEnter={event =>
+                    hoverItemThank(col.amount, event, matrix, X, copyMatrix)
+                  }
+                  onMouseLeave={event =>
+                    hoverItemThank(col.amount, event, matrix, X, copyMatrix)
+                  }
                   backgroundImage={col.percent}
                   size={col.size}
                   hover
                 >
-                  {col.percent ? col.percent + "%" : col.amount}
+                  {col.percent ? col.percent + '%' : col.amount}
                 </TdStyled>
               ))}
               <td>
@@ -63,9 +68,11 @@ const TableMain = ({
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   M: state.row,
   N: state.column,
+  X: state.step,
+  copyMatrix: state.copyMatrix,
   matrix: state.matrix,
   averageValueColumn: state.averageValueColumn,
 });

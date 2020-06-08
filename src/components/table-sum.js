@@ -1,21 +1,35 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { TableStyled, TdStyled } from "./table.styled";
-import { Button } from "./button";
-import * as actions from "../redux/actions";
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { TableStyled, TdStyled } from './table.styled';
+import { Button } from './button';
+import * as actions from '../redux/actions';
 
-const TableSum = ({ sumRowThank, addNewRow, hoverSum, rowSum, N, matrix}) => {
+const TableSum = ({
+  sumRowThank,
+  addNewRow,
+  hoverSum,
+  rowSum,
+  N,
+  matrix,
+  copyMatrix,
+  hoverSumThank,
+}) => {
   useEffect(() => {
     sumRowThank(matrix);
   }, [matrix, sumRowThank]);
+
   return (
     <TableStyled>
       <tbody>
         {rowSum.map((item, i) => (
           <tr
             key={i}
-            onMouseEnter={(event) => hoverSum(i, event)}
-            onMouseLeave={(event) => hoverSum(i, event)}
+            onMouseEnter={event =>
+              hoverSumThank(i, event, matrix, copyMatrix, rowSum)
+            }
+            onMouseLeave={event =>
+              hoverSumThank(i, event, matrix, copyMatrix, rowSum)
+            }
           >
             <TdStyled backgroundColor="rgb(103, 237, 247)">{item}</TdStyled>
           </tr>
@@ -32,10 +46,11 @@ const TableSum = ({ sumRowThank, addNewRow, hoverSum, rowSum, N, matrix}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   matrix: state.matrix,
   rowSum: state.rowSum,
   N: state.column,
+  copyMatrix: state.copyMatrix,
 });
 
 export default connect(mapStateToProps, actions)(TableSum);

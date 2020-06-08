@@ -1,8 +1,8 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const TableStyled = styled.table`
   margin: 0;
-  /* border-spacing: 15px; */
+  border-spacing: 15px;
 `;
 
 export const TdStyled = styled.td`
@@ -11,11 +11,11 @@ export const TdStyled = styled.td`
   border-bottom: 3px solid transparent;
   width: 70px;
   height: 60px;
-  background-color: ${({ backgroundColor }) => backgroundColor || "none"};
+  background-color: ${({ backgroundColor }) => backgroundColor || 'none'};
   background-image: ${({ backgroundImage }) =>
     backgroundImage
       ? `linear-gradient(to top,rgb(103, 237, 247) ${backgroundImage}%, rgba(255, 255, 255, 0) ${backgroundImage}%, rgba(255, 255, 255, 0) 100%, rgb(103, 237, 247) 100%)`
-      : "none"};
+      : 'none'};
   ${({ hover, size }) =>
     hover &&
     css`
@@ -40,7 +40,7 @@ export const Text = styled.h2`
 
 export const Container = styled.div`
   display: flex;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   justify-content: center;
 `;

@@ -1,5 +1,4 @@
-import * as types from "./types";
-import { hoverSum, getClosest } from "../utils/utils";
+import * as types from './types';
 
 const initialState = {
   matrix: [],
@@ -8,7 +7,7 @@ const initialState = {
   averageValueColumn: [],
   row: 5,
   column: 5,
-  step: 4,
+  step: 3,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -24,9 +23,6 @@ export const reducer = (state = initialState, action) => {
 
     case types.SET_AVERAGE_VALUE_COLUMN:
       return { ...state, averageValueColumn: action.payload };
-
-    case types.SET_COPY_MATRIX:
-      return { ...state, copyMatrix: action.payload };
 
     case types.ADD_ROW:
       return {
@@ -65,25 +61,18 @@ export const reducer = (state = initialState, action) => {
       };
 
     case types.HOVER_ITEM:
-      let [closest, copyMat] = getClosest(
-        action.number,
-        action.event,
-        state.matrix,
-        state.step,
-        state.copyMatrix
-      );
-
-      return { ...state, matrix: closest, copyMatrix: copyMat };
+      return {
+        ...state,
+        matrix: action.payload.closest,
+        copyMatrix: action.payload.copyMatrix,
+      };
 
     case types.HOVER_SUM:
-      const [newRow, copyMatrix] = hoverSum(
-        action.i,
-        action.event,
-        state.matrix,
-        state.copyMatrix,
-        state.rowSum
-      );
-      return { ...state, matrix: newRow, copyMatrix };
+      return {
+        ...state,
+        matrix: action.payload.newRow,
+        copyMatrix: action.payload.copyMatrix,
+      };
 
     default:
       return state;
