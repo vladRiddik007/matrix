@@ -24,37 +24,40 @@ const TableMain = ({
     averageValueColumnThank(matrix);
   }, [averageValueColumnThank, matrix]);
 
+  const renderTbody = arr =>
+    arr.map((row, i) => (
+      <tr key={i}>
+        {row.map((col, j) => (
+          <TdStyled
+            key={j}
+            onClick={() => incrementItem(i, j)}
+            onMouseEnter={event =>
+              hoverItemThank(col.amount, event, arr, X, copyMatrix)
+            }
+            onMouseLeave={event =>
+              hoverItemThank(col.amount, event, arr, X, copyMatrix)
+            }
+            backgroundImage={col.percent}
+            size={col.size}
+            hover
+          >
+            {col.percent ? col.percent + '%' : col.amount}
+          </TdStyled>
+        ))}
+        <td>
+          <Button onClick={() => deleteRow(i)} backgroundColor="red">
+            &#215;
+          </Button>
+        </td>
+      </tr>
+    ));
+
   return (
     <>
       {!!matrix.length || <Text>Game over</Text>}
       <TableStyled>
         <tbody>
-          {matrix.map((row, i) => (
-            <tr key={i}>
-              {row.map((col, j) => (
-                <TdStyled
-                  key={j}
-                  onClick={() => incrementItem(i, j)}
-                  onMouseEnter={event =>
-                    hoverItemThank(col.amount, event, matrix, X, copyMatrix)
-                  }
-                  onMouseLeave={event =>
-                    hoverItemThank(col.amount, event, matrix, X, copyMatrix)
-                  }
-                  backgroundImage={col.percent}
-                  size={col.size}
-                  hover
-                >
-                  {col.percent ? col.percent + '%' : col.amount}
-                </TdStyled>
-              ))}
-              <td>
-                <Button onClick={() => deleteRow(i)} backgroundColor="red">
-                  &#215;
-                </Button>
-              </td>
-            </tr>
-          ))}
+          {renderTbody(matrix)}
         </tbody>
         <TfootStyled>
           <tr>
